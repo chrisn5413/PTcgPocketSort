@@ -22,7 +22,7 @@ const CONTAINER = document.getElementById('card-container')
 const POKEMON_DATA = (async () => {
     let promiseResult = await fetch(url)
     return await promiseResult.json()
-})
+})()
 
 
 // adds more details to card data
