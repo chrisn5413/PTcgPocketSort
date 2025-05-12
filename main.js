@@ -11,5 +11,4 @@ var response = fetch('https://raw.githubusercontent.com/chase-manning/pokemon-tc
             card.innerHTML = `<h3>${item.title}</h3><p>${item.description}</p>`;
             container.appendChild(card);
         });
-        
     });*/
