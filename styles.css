@@ -1,6 +1,6 @@
 
 
 
-div.card-container {
+div#card-container {
     display: flex;
 }
