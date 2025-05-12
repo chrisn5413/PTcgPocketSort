@@ -1,5 +1,5 @@
 ﻿
-response = fetch('https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json')
+var response = fetch('https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json')
     /*.then(res => res.json())
     .then(data => {
         const container = document.getElementById('card-container');
