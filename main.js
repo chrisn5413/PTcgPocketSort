@@ -15,9 +15,14 @@
 
 const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json'
 
-const POKEMON_PROMISE_RESULT = await fetch(url)
-const POKEMON_DATA = await POKEMON_PROMISE_RESULT.json()
+// const POKEMON_PROMISE_RESULT = await fetch(url)
+// const POKEMON_DATA = await POKEMON_PROMISE_RESULT.json()
+
 const CONTAINER = document.getElementById('card-container')
+const POKEMON_DATA = (async () => {
+    let promiseResult = await fetch(url)
+    return await promiseResult.json()
+})
 
 
 // adds more details to card data
