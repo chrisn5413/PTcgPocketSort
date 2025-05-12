@@ -39,12 +39,11 @@ function updatePokemonData() {
         pokemon.realId = realId
 
         let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon"
-        let ex = pokemon.ex == "Yes" ? ' Ex' : ''
         let fullart = pokemon.fullart == "Yes" ? " fullart" : ''
         let pack = ` pack:${pokemon.pack}`
 
         const card = document.createElement('div')
-        card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${ex}${fullart}${pack}`
+        card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`
         card.innerHTML = `<img src=\"${pokemon.image}\" alt=\"${pokemon.name} ${pokemon.realId}\">`
 
         pokemon.div = card
