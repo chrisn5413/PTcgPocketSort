@@ -20,10 +20,12 @@ const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-
 
 const CONTAINER = document.getElementById('card-container')
 let POKEMON_DATA
-(async () => {
+let pokemonPromise = (async () => {
     let promiseResult = await fetch(url)
     let response = await promiseResult.json()
     POKEMON_DATA = response
+    updatePokemonData()
+    reloadCardContainer(POKEMON_DATA)
 })()
 
 
@@ -44,11 +46,15 @@ function updatePokemonData() {
         const card = document.createElement('div')
         card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity} ${ex} ${fullart} ${pack}`
         card.innerHTML = `<img src=\"${pokemon.image}\" alt=\"${pokemon.name} ${pokemon.realId}\">`
-        
+
         pokemon.div = card
     }
 }
+
 function reloadCardContainer(newData) {
+    if(typeof newData !== 'object')
+        return
+    
     CONTAINER.replaceChildren()
     for (let pokemon of newData) {
         CONTAINER.append(pokemon.div)
