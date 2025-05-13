@@ -13,50 +13,69 @@
         });
     });*/
 
-const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json'
+const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 
 // const POKEMON_PROMISE_RESULT = await fetch(url)
 // const POKEMON_DATA = await POKEMON_PROMISE_RESULT.json()
 
-const CONTAINER = document.getElementById('card-container')
-let POKEMON_DATA
-let pokemonPromise = (async () => {
-    let promiseResult = await fetch(url)
-    let response = await promiseResult.json()
-    POKEMON_DATA = response
-    updatePokemonData()
-    reloadCardContainer(POKEMON_DATA)
-})()
+const CONTAINER = document.getElementById('card-container');
+let POKEMON_DATA;
+(async () => {
+    let promiseResult = await fetch(url);
+    POKEMON_DATA = await promiseResult.json();
+    updatePokemonData();
+    reloadCardContainer(POKEMON_DATA);
+})();
 
 
 // adds more details to card data
 // chronological id, html element + image, etc
 // todo: card description
 function updatePokemonData() {
-    let realId = 0
+    let realId = 0;
     for (let pokemon of POKEMON_DATA) {
-        realId++
-        pokemon.realId = realId
+        realId++;
+        pokemon.realId = realId;
 
-        let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon"
-        let fullart = pokemon.fullart == "Yes" ? " fullart" : ''
-        let pack = ` pack:${pokemon.pack}`
+        let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon";
+        let fullart = pokemon.fullart === "Yes" ? " fullart" : '';
+        let pack = ` pack:${pokemon.pack}`;
 
-        const card = document.createElement('div')
-        card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`
-        card.innerHTML = `<img src=\"${pokemon.image}\" alt=\"${pokemon.name} ${pokemon.realId}\">`
-
-        pokemon.div = card
+        // const card = document.createElement('div')
+        // card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`
+        // card.innerHTML = `<img src=\"${pokemon.image}\" alt=\"${pokemon.name} ${pokemon.realId}\">`
+        //
+        // pokemon.div = card
+        
+        const card = document.createElement('img');
+        card.src = pokemon.image;
+        card.alt = `${pokemon.name} ${pokemon.realId}`;
+        card.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`;
+        
+        pokemon.imgElement = card;
     }
 }
 
+// loads cards onto page given pokemon objects in an object
 function reloadCardContainer(newData) {
     if(typeof newData !== 'object')
         return
 
+    let secondsBetweenLoading = 0;
+    let counter = 0;
+    
     CONTAINER.replaceChildren()
     for (let pokemon of newData) {
-        CONTAINER.append(pokemon.div)
+        // every 100 pokemon, wait a bit before loading the next 50
+        counter++;
+        if(counter > 100) {
+            counter = 0;
+            secondsBetweenLoading += 1;
+        }
+        
+        setTimeout(() => {
+            CONTAINER.append(pokemon.imgElement)
+        }, secondsBetweenLoading * 1000)
     }
 }
 
