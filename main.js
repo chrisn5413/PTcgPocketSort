@@ -61,21 +61,26 @@ function reloadCardContainer(newData) {
     if(typeof newData !== 'object')
         return
 
-    let secondsBetweenLoading = 0;
+    // 30ms between every card loading
+    let secondsBetweenLoading = 0.03;
+    let currentSeconds = 0;
     let counter = 0;
     
     CONTAINER.replaceChildren()
     for (let pokemon of newData) {
-        // every 100 pokemon, wait a bit before loading the next 50
+        // controls loading between sequential cards
+        currentSeconds += secondsBetweenLoading;
+        
+        // every 30 pokemon, reduce speed between loading by 5ms
         counter++;
-        if(counter > 50) {
+        if(counter > 30 && secondsBetweenLoading > 0) {
             counter = 0;
-            secondsBetweenLoading += 0.5;
+            secondsBetweenLoading -= 0.005;
         }
         
         setTimeout(() => {
             CONTAINER.append(pokemon.imgElement)
-        }, secondsBetweenLoading * 1000)
+        }, currentSeconds * 1000)
     }
 }
 
