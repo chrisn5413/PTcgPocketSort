@@ -68,9 +68,9 @@ function reloadCardContainer(newData) {
     for (let pokemon of newData) {
         // every 100 pokemon, wait a bit before loading the next 50
         counter++;
-        if(counter > 100) {
+        if(counter > 50) {
             counter = 0;
-            secondsBetweenLoading += 1;
+            secondsBetweenLoading += 0.5;
         }
         
         setTimeout(() => {
