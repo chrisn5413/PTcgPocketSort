@@ -8,18 +8,20 @@
 <body>
     <div class="header">
         <h1>Pokemon TCG Pocket Sorter</h1>
-        <div class="sort-options">
-            <ul>
-                <li><A HREF= "javascript:null" onClick="reloadCardContainer(POKEMON_DATA)">Card Id</a></li>
-                <li>Type</li>
-                <li>Rarity</li>
-            </ul>
-        </div>
-        <div class="img-sizing">Adjust Image Size
-            <ul>
-                <li>larger</li>
-                <li>smaller</li>
-            </ul>
+        <div class="user-selection-area">
+            <div class="sort-options">Sort Options:
+                <ul>
+                    <li><A HREF= "javascript:null" onClick="reloadCardContainer(POKEMON_DATA)">Card Id</a></li>
+                    <li>Type</li>
+                    <li>Rarity</li>
+                </ul>
+            </div>
+            <div class="img-sizing">Adjust Image Size:
+                <ul>
+                    <li>Larger</li>
+                    <li>Smaller</li>
+                </ul>
+            </div>
         </div>
     </div>
     <div id="card-container"></div>

@@ -59,3 +59,23 @@ function reloadCardContainer(newData) {
         CONTAINER.append(pokemon.div)
     }
 }
+
+function resetImageSize() {
+    //     // 1. Create the image element
+    // const img = document.createElement('img');
+
+    // // 2. Set the src attribute (required)
+    // img.src = 'path/to/your/image.jpg';
+
+    // // 3. Set the alt attribute (recommended for accessibility)
+    // img.alt = 'Description of the image';
+
+    // // 4. Optionally set other attributes like width, height, etc.
+    // img.width = 300;
+    // img.height = 200;
+
+    // // 5. Append the image element to the desired location in the DOM
+    // document.body.appendChild(img); // Example: append to the body
+    // // or
+    // // document.getElementById('some-element').appendChild(img);
+}
