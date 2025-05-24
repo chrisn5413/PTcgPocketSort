@@ -2,36 +2,26 @@
 
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
 const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
-let CONTAINER = createNewContainer()
+let CONTAINER = document.getElementById('card-container');
 
 const CARD_DATA_BY_SET = new Map();
-const POKEMON_CARDS = new Map();
-const CROWN_RARE_CARDS = new Map();
-const THREE_STAR_CARDS = new Map();
-const TWO_STAR_CARDS = new Map();
-const TWO_STAR_SHINY_CARDS = new Map();
-const ONE_STAR_CARDS = new Map();
-const TRAINER_CARDS = new Map();
-const SUPPORT_CARDS = new Map();
-const ITEMS_CARDS = new Map();
+const POKEMON_CARDS = new Set();
+const CROWN_RARE_CARDS = new Set();
+const THREE_STAR_CARDS = new Set();
+const TWO_STAR_CARDS = new Set();
+const TWO_STAR_SHINY_CARDS = new Set();
+const ONE_STAR_CARDS = new Set();
+const TRAINER_CARDS = new Set();
+const SUPPORT_CARDS = new Set();;
+const ITEMS_CARDS = new Set();
 
 let ALL_CARD_DATA;
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
-    updatePokemonData();
+    newUpdatePokemonData();
     reloadCardContainer(ALL_CARD_DATA);
 })();
-
-
-function createNewContainer() {
-    let currentContainer = document.getElementById('card-container');
-    if (currentContainer !== null) currentContainer.remove();
-    
-    let newContainer = document.createElement("div");
-    newContainer.id = "card-container";
-    return newContainer;
-}
 
 
 // adds more details to card data
@@ -59,26 +49,7 @@ function createNewContainer() {
 //     }
 // }
 
-function updatePokemonData() {
-    let chronologicalId = 0;
-    for (let pokemon of ALL_CARD_DATA) {
-        chronologicalId++;
-        pokemon.chronologicalId = chronologicalId;
-
-        let pokeDiv = document.createElement('div');
-
-        let pokeImg = document.createElement('img');
-        pokeImg.id = pokemon.realId;
-        pokeImg.loading = "lazy";
-        pokeImg.src = pokemon.image;
-        pokeImg.alt = `${pokemon.name} ${pokemon.realId}`;
-
-        pokeDiv.appendChild(pokeImg);
-        pokemon.pokeDiv = pokeDiv;
-    }
-}
-
-// loads cards onto page given pokemon objects in an object
+// loads cards onto page given pokemon objects in a collection
 function reloadCardContainer(newData) {
     if(typeof newData !== 'object')
         return;
@@ -89,7 +60,7 @@ function reloadCardContainer(newData) {
     let counter = 0;
     
     CONTAINER.replaceChildren()
-    for (let pokemon of newData) {
+    for (let card of newData) {
         // controls loading between sequential cards
         currentSeconds += secondsBetweenLoading;
         
@@ -101,11 +72,30 @@ function reloadCardContainer(newData) {
         }
         
         setTimeout(() => {
-            CONTAINER.append(pokemon.pokeDiv)
+            CONTAINER.append(card.cardImg)
         }, currentSeconds * 1000);
     }
-    document.getElementsByTagName('body')[0].appendChild(CONTAINER);
+    // document.getElementsByTagName('body')[0].appendChild(CONTAINER);
 }
+
+function newUpdatePokemonData() {
+    let chronologicalId = 0;
+    for (let card of ALL_CARD_DATA) {
+        chronologicalId++;
+        card.chronologicalId = chronologicalId;
+
+        let cardImg = document.createElement('img');
+        cardImg.id = card.chronologicalId;
+        cardImg.loading = "lazy";
+        cardImg.src = card.image;
+        cardImg.alt = `${card.name} ${card.chronologicalId}`;
+
+        card.cardImg = cardImg;
+
+
+    }
+}
+
 
 function expandAllImageSizes() {
     const images = document.querySelectorAll('div img');
