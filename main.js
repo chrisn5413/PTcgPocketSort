@@ -3,12 +3,14 @@
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
 const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 const CONTAINER = document.getElementById('card-container');
-let POKEMON_DATA;
+let ALL_POKEMON_DATA;
+let SETS = [];
+let POKEMON_DATA_BY_SET = [];
 (async () => {
     let promiseResult = await fetch(url);
-    POKEMON_DATA = await promiseResult.json();
+    ALL_POKEMON_DATA = await promiseResult.json();
     updatePokemonData();
-    reloadCardContainer(POKEMON_DATA);
+    reloadCardContainer(ALL_POKEMON_DATA);
 })();
 
 
@@ -17,7 +19,7 @@ let POKEMON_DATA;
 // todo: card description
 function updatePokemonData() {
     let realId = 0;
-    for (let pokemon of POKEMON_DATA) {
+    for (let pokemon of ALL_POKEMON_DATA) {
         realId++;
         pokemon.realId = realId;
 
@@ -30,6 +32,7 @@ function updatePokemonData() {
         
         let pokeImg = document.createElement('img');
         pokeImg.id = pokemon.realId;
+        pokeImg.loading = "lazy";
         pokeImg.src = pokemon.image;
         pokeImg.alt = `${pokemon.name} ${pokemon.realId}`;
         
@@ -79,7 +82,15 @@ function shrinkAllImageSizes() {
     });
 }
 function resetImages() {
-    for (let pokemon of POKEMON_DATA) {
+    for (let pokemon of ALL_POKEMON_DATA) {
         pokemon.pokeDiv.querySelector('img').removeAttribute('width');
     }
+
+function filterBy() {
+
+}
+
+function sortBy(){
+
+}
 }
