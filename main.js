@@ -3,14 +3,25 @@
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
 const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 const CONTAINER = document.getElementById('card-container');
-let ALL_POKEMON_DATA;
-let SETS = [];
-let POKEMON_DATA_BY_SET = [];
+
+
+const CARD_DATA_BY_SET = new Map();
+const POKEMON_CARDS = new Map();
+const CROWN_RARE_CARDS = new Map();
+const THREE_STAR_CARDS = new Map();
+const TWO_STAR_CARDS = new Map();
+const TWO_STAR_SHINY_CARDS = new Map();
+const ONE_STAR_CARDS = new Map();
+const TRAINER_CARDS = new Map();
+const SUPPORT_CARDS = new Map();
+const ITEMS_CARDS = new Map();
+
+let ALL_CARD_DATA;
 (async () => {
     let promiseResult = await fetch(url);
-    ALL_POKEMON_DATA = await promiseResult.json();
+    ALL_CARD_DATA = await promiseResult.json();
     updatePokemonData();
-    reloadCardContainer(ALL_POKEMON_DATA);
+    reloadCardContainer(ALL_CARD_DATA);
 })();
 
 
@@ -19,7 +30,7 @@ let POKEMON_DATA_BY_SET = [];
 // todo: card description
 function updatePokemonData() {
     let realId = 0;
-    for (let pokemon of ALL_POKEMON_DATA) {
+    for (let pokemon of ALL_CARD_DATA) {
         realId++;
         pokemon.realId = realId;
 
@@ -82,7 +93,7 @@ function shrinkAllImageSizes() {
     });
 }
 function resetImages() {
-    for (let pokemon of ALL_POKEMON_DATA) {
+    for (let pokemon of ALL_CARD_DATA) {
         pokemon.pokeDiv.querySelector('img').removeAttribute('width');
     }
 
