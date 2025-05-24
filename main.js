@@ -2,8 +2,7 @@
 
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
 const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
-const CONTAINER = document.getElementById('card-container');
-
+let CONTAINER = createNewContainer()
 
 const CARD_DATA_BY_SET = new Map();
 const POKEMON_CARDS = new Map();
@@ -25,28 +24,55 @@ let ALL_CARD_DATA;
 })();
 
 
-// adds more details to card data
-// chronological id, html image, etc
-// todo: card description
-function updatePokemonData() {
-    let realId = 0;
-    for (let pokemon of ALL_CARD_DATA) {
-        realId++;
-        pokemon.realId = realId;
+function createNewContainer() {
+    let currentContainer = document.getElementById('card-container');
+    if (currentContainer !== null) currentContainer.remove();
+    
+    let newContainer = document.createElement("div");
+    newContainer.id = "card-container";
+    return newContainer;
+}
 
-        let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon";
-        let fullart = pokemon.fullart === "Yes" ? " fullart" : '';
-        let pack = ` pack:${pokemon.pack}`;
-        
+
+// adds more details to card data
+// function updatePokemonData() {
+//     let realId = 0;
+//     for (let pokemon of ALL_CARD_DATA) {
+//         realId++;
+//         pokemon.realId = realId;
+//
+//         let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon";
+//         let fullart = pokemon.fullart === "Yes" ? " fullart" : '';
+//         let pack = ` pack:${pokemon.pack}`;
+//        
+//         let pokeDiv = document.createElement('div');
+//         pokeDiv.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`;
+//        
+//         let pokeImg = document.createElement('img');
+//         pokeImg.id = pokemon.realId;
+//         pokeImg.loading = "lazy";
+//         pokeImg.src = pokemon.image;
+//         pokeImg.alt = `${pokemon.name} ${pokemon.realId}`;
+//        
+//         pokeDiv.appendChild(pokeImg);
+//         pokemon.pokeDiv = pokeDiv;
+//     }
+// }
+
+function updatePokemonData() {
+    let chronologicalId = 0;
+    for (let pokemon of ALL_CARD_DATA) {
+        chronologicalId++;
+        pokemon.chronologicalId = chronologicalId;
+
         let pokeDiv = document.createElement('div');
-        pokeDiv.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`;
-        
+
         let pokeImg = document.createElement('img');
         pokeImg.id = pokemon.realId;
         pokeImg.loading = "lazy";
         pokeImg.src = pokemon.image;
         pokeImg.alt = `${pokemon.name} ${pokemon.realId}`;
-        
+
         pokeDiv.appendChild(pokeImg);
         pokemon.pokeDiv = pokeDiv;
     }
@@ -78,6 +104,7 @@ function reloadCardContainer(newData) {
             CONTAINER.append(pokemon.pokeDiv)
         }, currentSeconds * 1000);
     }
+    document.getElementsByTagName('body')[0].appendChild(CONTAINER);
 }
 
 function expandAllImageSizes() {
