@@ -1,26 +1,43 @@
 ﻿
 
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
-const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
+// const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
+const url = 'https://raw.githubusercontent.com/chrisn5413/CARDS-PokemonPocket-scrapper/refs/heads/main/pokemon_cards.json'
 let CONTAINER = document.getElementById('card-container');
 
 const CARD_DATA_BY_SET = new Map();
-const POKEMON_CARDS = new Set();
-const CROWN_RARE_CARDS = new Set();
-const THREE_STAR_CARDS = new Set();
-const TWO_STAR_CARDS = new Set();
-const TWO_STAR_SHINY_CARDS = new Set();
-const ONE_STAR_CARDS = new Set();
+
 const TRAINER_CARDS = new Set();
-const SUPPORT_CARDS = new Set();;
+const SUPPORT_CARDS = new Set();
 const ITEMS_CARDS = new Set();
+
+const POKEMON_CARDS = new Set();
+
+// this is a map in case more types come out (fairy)
+const POKEMON_BY_TYPE = new Map();
+
+const STAGE_BASIC = new Set();
+const STAGE_ONE = new Set();
+const STAGE_TWO = new Set();
+
+// map these instead in case more rarities come out
+// const CROWN_RARE_CARDS = new Set();
+// const THREE_STAR_CARDS = new Set();
+// const TWO_STAR_CARDS = new Set();
+// // const TWO_STAR_SHINY_CARDS = new Set();
+// const ONE_STAR_CARDS = new Set();
+// const FOUR_DIAMOND_CARDS = new Set();
+// const THREE_DIAMOND_CARDS = new Set();
+// const TWO_DIAMOND_CARDS = new Set();
+// const ONE_DIAMOND_CARDS = new Set();
+
 
 let ALL_CARD_DATA;
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
-    newUpdatePokemonData();
-    reloadCardContainer(ALL_CARD_DATA);
+    // newUpdatePokemonData();
+    // reloadCardContainer(ALL_CARD_DATA);
 })();
 
 
@@ -49,6 +66,43 @@ let ALL_CARD_DATA;
 //     }
 // }
 
+function newUpdatePokemonData() {
+    let chronologicalId = 0;
+    for (let card of ALL_CARD_DATA) {
+        chronologicalId++;
+        card.chronologicalId = chronologicalId;
+
+        let cardImg = document.createElement('img');
+        cardImg.id = card.chronologicalId;
+        cardImg.loading = "lazy";
+        cardImg.src = card.image;
+        cardImg.alt = `${card.name} ${card.chronologicalId}`;
+
+        card.cardImg = cardImg;
+
+        // add card to list mapped by set name or create if nonexistent
+        if (CARD_DATA_BY_SET.has(card.set_details)) {
+            CARD_DATA_BY_SET.get(card.set_details).push(card);
+        } else {
+            CARD_DATA_BY_SET.set(card.set_details, [card])
+        }
+
+        // update trainer, item, and supporter cards sets
+        if (card.card_type.includes('Trainer')) {
+            TRAINER_CARDS.add(card);
+
+            if (card.card_type.includes('Supporter')) 
+                SUPPORT_CARDS.add(card);
+            if (card.card_type.includes('Item'))
+                ITEMS_CARDS.add(card);
+        } else if (card.card_type.includes) {
+
+        }
+
+        
+    }
+}
+
 // loads cards onto page given pokemon objects in a collection
 function reloadCardContainer(newData) {
     if(typeof newData !== 'object')
@@ -76,24 +130,6 @@ function reloadCardContainer(newData) {
         }, currentSeconds * 1000);
     }
     // document.getElementsByTagName('body')[0].appendChild(CONTAINER);
-}
-
-function newUpdatePokemonData() {
-    let chronologicalId = 0;
-    for (let card of ALL_CARD_DATA) {
-        chronologicalId++;
-        card.chronologicalId = chronologicalId;
-
-        let cardImg = document.createElement('img');
-        cardImg.id = card.chronologicalId;
-        cardImg.loading = "lazy";
-        cardImg.src = card.image;
-        cardImg.alt = `${card.name} ${card.chronologicalId}`;
-
-        card.cardImg = cardImg;
-
-
-    }
 }
 
 
