@@ -3,69 +3,23 @@
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
 // const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 const url = 'https://raw.githubusercontent.com/chrisn5413/CARDS-PokemonPocket-scrapper/refs/heads/main/pokemon_cards.json'
-let CONTAINER = document.getElementById('card-container');
 
-const CARD_DATA_BY_SET = new Map();
-
-const TRAINER_CARDS = new Set();
-const SUPPORT_CARDS = new Set();
-const ITEMS_CARDS = new Set();
-
-const POKEMON_CARDS = new Set();
-
-// this is a map in case more types come out (fairy)
-const POKEMON_BY_TYPE = new Map();
-
-const STAGE_BASIC = new Set();
-const STAGE_ONE = new Set();
-const STAGE_TWO = new Set();
-
-// map these instead in case more rarities come out
-// const CROWN_RARE_CARDS = new Set();
-// const THREE_STAR_CARDS = new Set();
-// const TWO_STAR_CARDS = new Set();
-// // const TWO_STAR_SHINY_CARDS = new Set();
-// const ONE_STAR_CARDS = new Set();
-// const FOUR_DIAMOND_CARDS = new Set();
-// const THREE_DIAMOND_CARDS = new Set();
-// const TWO_DIAMOND_CARDS = new Set();
-// const ONE_DIAMOND_CARDS = new Set();
-
-
+let CONTAINER;
 let ALL_CARD_DATA;
+let CURRENT_PAGE_CARD_DATA;
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
-    // newUpdatePokemonData();
-    // reloadCardContainer(ALL_CARD_DATA);
+    CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
+    newUpdatePokemonData();
+    CONTAINER = createNewCardContainer();
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
 })();
 
 
-// adds more details to card data
-// function updatePokemonData() {
-//     let realId = 0;
-//     for (let pokemon of ALL_CARD_DATA) {
-//         realId++;
-//         pokemon.realId = realId;
-//
-//         let cardType = pokemon.health === "" ? "non-pokemon" : "pokemon";
-//         let fullart = pokemon.fullart === "Yes" ? " fullart" : '';
-//         let pack = ` pack:${pokemon.pack}`;
-//        
-//         let pokeDiv = document.createElement('div');
-//         pokeDiv.className = `${cardType} ${pokemon.realId} ${pokemon.name} ${pokemon.rarity}${fullart}${pack}`;
-//        
-//         let pokeImg = document.createElement('img');
-//         pokeImg.id = pokemon.realId;
-//         pokeImg.loading = "lazy";
-//         pokeImg.src = pokemon.image;
-//         pokeImg.alt = `${pokemon.name} ${pokemon.realId}`;
-//        
-//         pokeDiv.appendChild(pokeImg);
-//         pokemon.pokeDiv = pokeDiv;
-//     }
-// }
 
+const default_image_width = 367;
+let current_image_width = default_image_width;
 function newUpdatePokemonData() {
     let chronologicalId = 0;
     for (let card of ALL_CARD_DATA) {
@@ -79,32 +33,23 @@ function newUpdatePokemonData() {
         cardImg.alt = `${card.name} ${card.chronologicalId}`;
 
         card.cardImg = cardImg;
-
-        // add card to list mapped by set name or create if nonexistent
-        if (CARD_DATA_BY_SET.has(card.set_details)) {
-            CARD_DATA_BY_SET.get(card.set_details).push(card);
-        } else {
-            CARD_DATA_BY_SET.set(card.set_details, [card])
-        }
-
-        // update trainer, item, and supporter cards sets
-        if (card.card_type.includes('Trainer')) {
-            TRAINER_CARDS.add(card);
-
-            if (card.card_type.includes('Supporter')) 
-                SUPPORT_CARDS.add(card);
-            if (card.card_type.includes('Item'))
-                ITEMS_CARDS.add(card);
-        } else if (card.card_type.includes) {
-
-        }
-
-        
     }
 }
 
+function createNewCardContainer() {
+    let container = document.getElementById('card-container');
+    if (container !== null)
+        container.remove();
+
+    container = document.createElement('div');
+    container.id = 'card-container';
+    document.getElementsByTagName('body')[0].append(container);
+
+    return container;
+}
+
 // loads cards onto page given pokemon objects in a collection
-function reloadCardContainer(newData) {
+function reloadCardContainer(container, newData) {
     if(typeof newData !== 'object')
         return;
 
@@ -112,8 +57,7 @@ function reloadCardContainer(newData) {
     let secondsBetweenLoading = 0.03;
     let currentSeconds = 0;
     let counter = 0;
-    
-    CONTAINER.replaceChildren()
+
     for (let card of newData) {
         // controls loading between sequential cards
         currentSeconds += secondsBetweenLoading;
@@ -126,35 +70,72 @@ function reloadCardContainer(newData) {
         }
         
         setTimeout(() => {
-            CONTAINER.append(card.cardImg)
+            container.append(card.cardImg)
         }, currentSeconds * 1000);
     }
-    // document.getElementsByTagName('body')[0].appendChild(CONTAINER);
 }
 
-
+const image_resize_amount = 50;
+const min_image_width = 67;
+const max_image_width = 567;
 function expandAllImageSizes() {
-    const images = document.querySelectorAll('div img');
-    images.forEach(image => {
-        image.width += 75;
-    });
+    changeImageSize(current_image_width + image_resize_amount);
 }
 function shrinkAllImageSizes() {
-    const images = document.querySelectorAll('div img');
-    images.forEach(image => {
-        image.width -= 75;
-    });
+    changeImageSize(current_image_width - image_resize_amount);
 }
 function resetImages() {
-    for (let pokemon of ALL_CARD_DATA) {
-        pokemon.pokeDiv.querySelector('img').removeAttribute('width');
+    changeImageSize(default_image_width);
+}
+function changeImageSize(new_width) {
+    if (new_width < min_image_width || new_width > max_image_width)
+        return;
+
+    current_image_width = new_width;
+    // CONTAINER = createNewCardContainer();
+    
+    for (let card of ALL_CARD_DATA) {
+        card.cardImg.setAttribute('width', current_image_width);
     }
+
+    // reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+}
 
 function filterBy() {
 
 }
 
-function sortBy(){
-
+// default is ascending
+let id_ascending = 1;
+function sortByCardId(){
+    id_ascending = id_ascending * -1;
+    let sortedCards = sortArrayByProperty(id_ascending, CURRENT_PAGE_CARD_DATA, "chronologicalId");
+    reloadCardContainer(createNewCardContainer(), sortedCards);
 }
+
+// stolen from google
+function sortArrayByProperty(id_ascending, arr, property) {
+  if(id_ascending) {
+    return arr.toSorted((a, b) => {
+        if (a[property] < b[property]) {
+            return -1;
+        }
+        if (a[property] > b[property]) {
+            return 1;
+        }
+        return 0;
+    });
+  } 
+  else {
+    return arr.toSorted((a, b) => {
+    if (a[property] < b[property]) {
+      return 1;
+    }
+    if (a[property] > b[property]) {
+      return -1;
+    }
+    return 0;
+  });
+  }
 }
