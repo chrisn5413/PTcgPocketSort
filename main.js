@@ -4,23 +4,22 @@
 // const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 const url = 'https://raw.githubusercontent.com/chrisn5413/CARDS-PokemonPocket-scrapper/refs/heads/main/pokemon_cards.json'
 
-let CONTAINER;
+// let CONTAINER;
 let ALL_CARD_DATA;
 let CURRENT_PAGE_CARD_DATA;
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
-    newUpdatePokemonData();
-    CONTAINER = createNewCardContainer();
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    updatePokemonData();
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 })();
 
 
 
 const default_image_width = 367;
 let current_image_width = default_image_width;
-function newUpdatePokemonData() {
+function updatePokemonData() {
     let chronologicalId = 0;
     for (let card of ALL_CARD_DATA) {
         chronologicalId++;
@@ -106,17 +105,43 @@ function filterBy() {
 
 }
 
-// default is ascending
-let id_ascending = 1;
-function sortByCardId(){
-    id_ascending = id_ascending * -1;
-    let sortedCards = sortArrayByProperty(id_ascending, CURRENT_PAGE_CARD_DATA, "chronologicalId");
-    reloadCardContainer(createNewCardContainer(), sortedCards);
+
+let sortOption = "chronologicalId";
+let ascending = 1;
+
+function sortByCardId() {
+    if (sortOption === "chronologicalId"){
+        ascending *= -1;
+    } else {
+        sortOption = "chronologicalId";
+        ascending = 1;
+    }
+    sortByOption("chronologicalId", ascending);
 }
 
+function sortByCardType() {
+    if (sortOption === "type"){
+        ascending *= -1;
+    } else {
+        sortOption = "type";
+        ascending = 1;
+    }
+    sortByOption("type", ascending);
+}
+
+function sortByOption(option, ascending){
+    CURRENT_PAGE_CARD_DATA = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+}
+
+function resetSortOptions() {
+    CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+ }
+
 // stolen from google
-function sortArrayByProperty(id_ascending, arr, property) {
-  if(id_ascending) {
+function sortArrayByProperty(ascending, arr, property) {
+  if(ascending === 1) {
     return arr.toSorted((a, b) => {
         if (a[property] < b[property]) {
             return -1;
