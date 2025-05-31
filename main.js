@@ -39,7 +39,7 @@ function updatePokemonData() {
         let cardImg = document.createElement('img');
         cardImg.id = card.chronologicalId;
         cardImg.loading = "lazy";
-        cardImg.src = card.image;
+        cardImg.src = `./PokemonImages/${chronologicalId}.webp`;
         cardImg.alt = `${card.name} ${card.chronologicalId}`;
 
         card.cardImg = cardImg;
