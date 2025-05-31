@@ -15,7 +15,17 @@ let CURRENT_PAGE_CARD_DATA;
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 })();
 
-
+const rarity = {
+    "":0,
+    "◊":1,
+    "◊◊":2,
+    "◊◊◊":3,
+    "◊◊◊◊":4,
+    "☆":5,
+    "☆☆":6,
+    "☆☆☆":7,
+    "Crown Rare":8
+}
 
 const default_image_width = 367;
 let current_image_width = default_image_width;
@@ -24,6 +34,7 @@ function updatePokemonData() {
     for (let card of ALL_CARD_DATA) {
         chronologicalId++;
         card.chronologicalId = chronologicalId;
+        card.rarityNum = rarity[card.rarity]
 
         let cardImg = document.createElement('img');
         cardImg.id = card.chronologicalId;
@@ -127,6 +138,16 @@ function sortByCardType() {
         ascending = 1;
     }
     sortByOption("type", ascending);
+}
+
+function sortByCardRarity() {
+    if (sortOption === "rarityNum"){
+        ascending *= -1;
+    } else {
+        sortOption = "rarityNum";
+        ascending = -1;
+    }
+    sortByOption("rarityNum", ascending);
 }
 
 function sortByOption(option, ascending){
