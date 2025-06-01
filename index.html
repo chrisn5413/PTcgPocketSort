@@ -9,62 +9,79 @@
     <div class="header">
         <h1>Pokemon TCG Pocket Sorter</h1>
         <div class="user-selection-area">
-            <div class="sort-options">Sort Options:
-                <ul>
-                    <li><A HREF= "javascript:null" onClick="resetSortOptions()">Reset Sorting</a></li>
-                    <li><A HREF= "javascript:null" onClick="sortByCardId()">Card Id</a></li>
-                    <li><A HREF= "javascript:null" onClick="sortByCardType()">Card Type</a></li>
-                    <li><A HREF= "javascript:null" onClick="sortByCardRarity()">Rarity</a></li>
-                </ul>
+            <div class="sort-options"><div class="title">Sort By:</div>
+                <div class="sorting">
+                    <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center">Reset Sorting</span></a>
+                    <ul>
+                        <li><A HREF= "javascript:null" onClick="sortByCardId()">Card Id</a></li>
+                        <li><A HREF= "javascript:null" onClick="sortByCardType()">Card Type</a></li>
+                        <li><A HREF= "javascript:null" onClick="sortByCardRarity()">Rarity</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="filter-options">Filter Options:
-                <div class="filter-body">
-                    <div class="type-filter">Pokemon type
-                        <div class="filter-body">
-                            <ul>
-                                <li><A HREF= "javascript:null" onClick="">Grass</a></li>
-                                <li><A HREF= "javascript:null" onClick="">Water</a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a>Psychic</li>
-                                <li><A HREF= "javascript:null" onClick=""></a>Darkness</li>
-                                <li><A HREF= "javascript:null" onClick=""></a>Dragon</li>
-                            </ul>
-                            <ul>
-                                <li><A HREF= "javascript:null" onClick="">Fire</a></li>
-                                <li><A HREF= "javascript:null" onClick="">Lightning</a></li>
-                                <li><A HREF= "javascript:null" onClick="">Fighting</a></li>
-                                <li><A HREF= "javascript:null" onClick="">Metal</a></li>
-                                <li><A HREF= "javascript:null" onClick="">Colorless</a></li>
-                            </ul>
+            <div class="filter-options"><div class="title">Filter By:</div>
+                <div class="filters">
+                    <div class="body">
+                        <div class="type"><span class="center">Pokemon Type</span>
+                            <div class="body">
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick="">Grass</a></li>
+                                    <li><A HREF="javascript:null" onClick="">Water</a></li>
+                                    <li><A HREF="javascript:null" onClick=""></a>Psychic</li>
+                                    <li><A HREF="javascript:null" onClick=""></a>Darkness</li>
+                                    <li><A HREF="javascript:null" onClick=""></a>Dragon</li>
+                                </ul>
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick="">Fire</a></li>
+                                    <li><A HREF="javascript:null" onClick="">Lightning</a></li>
+                                    <li><A HREF="javascript:null" onClick="">Fighting</a></li>
+                                    <li><A HREF="javascript:null" onClick="">Metal</a></li>
+                                    <li><A HREF="javascript:null" onClick="">Colorless</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="rarity-filter">Card rarity
-                        <div class="filter-body">
-                            <ul>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                            </ul>
+                        <div class="rarity"><span class="center">Card rarity</span>
+                            <div class="body">
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick="">1 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="">2 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="">3 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="">4 Diamond</a></li>
+                                </ul>
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick=""><span>1 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick=""><span>2 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick=""><span>3 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick="">Crown Rare</a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div class="type-filter">
-                        <div class="filter-body">
-                            <ul>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                                <li><A HREF= "javascript:null" onClick=""></a></li>
-                            </ul>
+                        <div class="booster"><span class="center">Booster</span>
+                            <div class="body">
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick="">1) Genetic Apex</a></li>
+                                    <li><A HREF="javascript:null" onClick="">2) Mythical Island</a></li>
+                                    <li><A HREF="javascript:null" onClick="">3) Space-Time Smackdown</a></li>
+                                    <li><A HREF="javascript:null" onClick="">4) Triumphant Light</a></li>
+                                </ul>
+                                <ul>
+                                    <li><A HREF="javascript:null" onClick="">5) Shining Revelry</a></li>
+                                    <li><A HREF="javascript:null" onClick="">6) Celestial Guardians</a></li>
+                                    <li><A HREF="javascript:null" onClick="">7) Extradimensional Crisis</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="img-sizing">Adjust Image Size:
-                <ul>
-                    <li><A HREF= "javascript:null" onClick="expandAllImageSizes()">Expand</a></li>
-                    <li><A HREF= "javascript:null" onClick="shrinkAllImageSizes()">Shrink</a></li>
-                    <li><A HREF= "javascript:null" onClick="resetImages()">Reset</a></li>
-                </ul>
+            <div class="img-options"><div class="title">Adjust Image Size:</div>
+                <div class="img-sizes">
+                    <A HREF="javascript:null" onClick="resetImages()">Reset</a>
+                    <ul>
+                        <li><A HREF="javascript:null" onClick="expandAllImageSizes()">Expand</a></li>
+                        <li><A HREF="javascript:null" onClick="shrinkAllImageSizes()">Shrink</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

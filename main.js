@@ -66,6 +66,10 @@ function reloadCardContainer(container, newData) {
     for (let card of newData) {
         container.append(card.cardImg);
     }
+    
+    // keeping this in, in memory of my waste of time lmao, turns out browsers and phones are smart
+    // and I don't need to baby them with delayed loading
+    
     // // 30ms between every card loading
     // let secondsBetweenLoading = 0.03;
     // let currentSeconds = 0;

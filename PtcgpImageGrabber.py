@@ -41,7 +41,7 @@ def main():
     for pkmn in data:
         img_number += 1
 
-        if img_number < 962: continue
+        if img_number != 962: continue
 
         picture_url = pkmn['image']
         filename = f"{directory_name}/{img_number}.webp"

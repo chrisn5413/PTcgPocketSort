@@ -1,13 +1,15 @@
 
+
 /* used for testing padding, remove or comment out later */
-/* div {
-    outline: 2px solid red;
-} */
+/*div {*/
+/*    outline: 2px solid red;*/
+/*}*/
 
 /* makes header section displayed vertially */
 div.header {
     display: flex;
     flex-direction: column;
+    padding: 20px;
 }
 
 /* remove styling for all links */
@@ -16,48 +18,63 @@ a:link, a:hover, a:visited, a:active {
     text-decoration: none;
 }
 
-/* remove dots and padding from lists */
+/* remove dots and change padding from lists */
 ul {
     list-style-type: none;
-    padding: 0%;
+    padding: 4px;
 }
 
-/* sets sorting, filter, and image size in the same line, 20px away from border */
+body {
+    background-color: aliceblue;
+}
+
+/* sets sorting, filter, and image size in the same line*/
 div.user-selection-area {
     display: flex;
     flex-direction: row;
-    margin: 20px;
+    background-color: #dbddd7;
 }
 
-/* control space between sorting and image size */
-div.user-selection-area div {
-    margin-right: 20px;
-}
-
-div.filter-options {
+.sort-options,
+.filter-options,
+.img-options {
     display: flex;
     flex-direction: column;
+    /*flex-grow: 1;*/
+    /*flex-basis: 0;*/
+    padding: 10px 0px 10px 10px;
+    height: 235px;
 }
 
-/* .filter-options-body {
-    display: flex;
-    flex-direction: row;
-} */
-
-.type-filter {
+/* extends div vertically to fill all space and styles inner div color*/
+.sorting,
+.filters,
+.type,
+.rarity,
+.booster,
+.img-sizes {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    padding: 10px;
+    background-color: aliceblue;
 }
 
-.filter-body {
+/* used to center filter section titles*/
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    font-weight: bold;
+}
+
+/* used to make divs of class body to flex horizontally*/
+.body {
     display: flex;
     flex-direction: row;
 }
-
-/* .type-filter-body {
-    display: flex;
-    flex-direction: row;
-} */
 
 /* have cards wrap around screen */
 div#card-container {
