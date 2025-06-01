@@ -119,8 +119,9 @@ function changeImageSize(new_width) {
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
-function filterBy() {
-
+let filters = [];
+function filterBy(option) {
+    
 }
 
 
