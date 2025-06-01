@@ -22,7 +22,7 @@ ul {
     padding: 0%;
 }
 
-/* sets sorting and image size in the same line, 20px away from border */
+/* sets sorting, filter, and image size in the same line, 20px away from border */
 div.user-selection-area {
     display: flex;
     flex-direction: row;
@@ -33,6 +33,31 @@ div.user-selection-area {
 div.user-selection-area div {
     margin-right: 20px;
 }
+
+div.filter-options {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .filter-options-body {
+    display: flex;
+    flex-direction: row;
+} */
+
+.type-filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-body {
+    display: flex;
+    flex-direction: row;
+}
+
+/* .type-filter-body {
+    display: flex;
+    flex-direction: row;
+} */
 
 /* have cards wrap around screen */
 div#card-container {
