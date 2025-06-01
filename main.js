@@ -63,26 +63,29 @@ function reloadCardContainer(container, newData) {
     if(typeof newData !== 'object')
         return;
 
-    // 30ms between every card loading
-    let secondsBetweenLoading = 0.03;
-    let currentSeconds = 0;
-    let counter = 0;
-
     for (let card of newData) {
-        // controls loading between sequential cards
-        currentSeconds += secondsBetweenLoading;
-        
-        // every 30 pokemon, reduce speed between loading by 5ms
-        counter++;
-        if(counter > 30 && secondsBetweenLoading > 0) {
-            counter = 0;
-            secondsBetweenLoading -= 0.005;
-        }
-        
-        setTimeout(() => {
-            container.append(card.cardImg)
-        }, currentSeconds * 1000);
+        container.append(card.cardImg);
     }
+    // // 30ms between every card loading
+    // let secondsBetweenLoading = 0.03;
+    // let currentSeconds = 0;
+    // let counter = 0;
+    //
+    // for (let card of newData) {
+    //     // controls loading between sequential cards
+    //     currentSeconds += secondsBetweenLoading;
+    //    
+    //     // every 30 pokemon, reduce speed between loading by 5ms
+    //     counter++;
+    //     if(counter > 30 && secondsBetweenLoading > 0) {
+    //         counter = 0;
+    //         secondsBetweenLoading -= 0.005;
+    //     }
+    //    
+    //     setTimeout(() => {
+    //         container.append(card.cardImg)
+    //     }, currentSeconds * 1000);
+    // }
 }
 
 const image_resize_amount = 50;
@@ -151,8 +154,8 @@ function sortByCardRarity() {
 }
 
 function sortByOption(option, ascending){
-    CURRENT_PAGE_CARD_DATA = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    let sorted_page = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
+    reloadCardContainer(createNewCardContainer(), sorted_page);
 }
 
 function resetSortOptions() {
@@ -162,26 +165,14 @@ function resetSortOptions() {
 
 // stolen from google
 function sortArrayByProperty(ascending, arr, property) {
-  if(ascending === 1) {
     return arr.toSorted((a, b) => {
         if (a[property] < b[property]) {
-            return -1;
+            return -1 * ascending;
         }
         if (a[property] > b[property]) {
-            return 1;
+            return 1 * ascending;
         }
         return 0;
     });
-  } 
-  else {
-    return arr.toSorted((a, b) => {
-    if (a[property] < b[property]) {
-      return 1;
-    }
-    if (a[property] > b[property]) {
-      return -1;
-    }
-    return 0;
-  });
-  }
 }
+
