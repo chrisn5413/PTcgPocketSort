@@ -108,6 +108,11 @@ ul,
     flex-direction: row;
 }
 
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* have cards wrap around screen */
 div#card-container {
     display: flex;
