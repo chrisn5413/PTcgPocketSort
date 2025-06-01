@@ -158,8 +158,8 @@ function sortByCardRarity() {
 }
 
 function sortByOption(option, ascending){
-    let sorted_page = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
-    reloadCardContainer(createNewCardContainer(), sorted_page);
+    CURRENT_PAGE_CARD_DATA = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 function resetSortOptions() {
