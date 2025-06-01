@@ -47,17 +47,49 @@ div.user-selection-area {
 }
 
 /* extends div vertically to fill all space and styles inner div color*/
-.sorting,
-.filters,
+
+.sort-by,
+.filter-by,
 .type,
 .rarity,
 .booster,
-.img-sizes {
+.img-sizes-container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     padding: 10px;
+}
+
+.filter-by {
+    padding: 0;
+}
+
+.sorting,
+.filters,
+.img-sizes {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2px;
+}
+
+.sort-by,
+.type,
+.rarity,
+.booster,
+.img-sizes-container {
+    background-color: #dbddd7;
+}
+
+ul,
+.title {
     background-color: aliceblue;
+    padding: 5px;
+    outline: 2px solid black;
+}
+
+.title {
+    font-weight: bold;
 }
 
 /* used to center filter section titles*/
@@ -66,8 +98,8 @@ div.user-selection-area {
     justify-content: center;
 }
 
-.title {
-    font-weight: bold;
+.reset {
+    background-color: darkgray;
 }
 
 /* used to make divs of class body to flex horizontally*/

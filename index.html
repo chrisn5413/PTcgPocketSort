@@ -11,18 +11,20 @@
         <div class="user-selection-area">
             <div class="sort-options"><div class="title">Sort By:</div>
                 <div class="sorting">
-                    <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center">Reset Sorting</span></a>
-                    <ul>
-                        <li><A HREF= "javascript:null" onClick="sortByCardId()">Card Id</a></li>
-                        <li><A HREF= "javascript:null" onClick="sortByCardType()">Card Type</a></li>
-                        <li><A HREF= "javascript:null" onClick="sortByCardRarity()">Rarity</a></li>
-                    </ul>
+                    <div class="sort-by">
+                        <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Reset Sorting</span></a>
+                        <ul>
+                            <li><A HREF= "javascript:null" onClick="sortByCardId()">Card Id</a></li>
+                            <li><A HREF= "javascript:null" onClick="sortByCardType()">Card Type</a></li>
+                            <li><A HREF= "javascript:null" onClick="sortByCardRarity()">Rarity</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="filter-options"><div class="title">Filter By:</div>
                 <div class="filters">
-                    <div class="body">
-                        <div class="type"><span class="center">Pokemon Type</span>
+                    <div class="filter-by body">
+                        <div class="type"><span class="center title">Pokemon Type</span>
                             <div class="body">
                                 <ul>
                                     <li><A HREF="javascript:null" onClick="">Grass</a></li>
@@ -40,7 +42,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="rarity"><span class="center">Card rarity</span>
+                        <div class="rarity"><span class="center title">Card rarity</span>
                             <div class="body">
                                 <ul>
                                     <li><A HREF="javascript:null" onClick="">1 Diamond</a></li>
@@ -49,14 +51,14 @@
                                     <li><A HREF="javascript:null" onClick="">4 Diamond</a></li>
                                 </ul>
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick=""><span>1 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick=""><span>2 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick=""><span>3 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick=""><span class="center">1 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick=""><span class="center">2 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick=""><span class="center">3 Star</span></a></li>
                                     <li><A HREF="javascript:null" onClick="">Crown Rare</a></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="booster"><span class="center">Booster</span>
+                        <div class="booster"><span class="center title">Booster</span>
                             <div class="body">
                                 <ul>
                                     <li><A HREF="javascript:null" onClick="">1) Genetic Apex</a></li>
@@ -76,11 +78,13 @@
             </div>
             <div class="img-options"><div class="title">Adjust Image Size:</div>
                 <div class="img-sizes">
-                    <A HREF="javascript:null" onClick="resetImages()">Reset</a>
-                    <ul>
-                        <li><A HREF="javascript:null" onClick="expandAllImageSizes()">Expand</a></li>
-                        <li><A HREF="javascript:null" onClick="shrinkAllImageSizes()">Shrink</a></li>
-                    </ul>
+                    <div class="img-sizes-container">
+                        <A HREF="javascript:null" onClick="resetImages()"><span class="center title reset">Reset Image Size</span></a>
+                        <ul>
+                            <li><A HREF="javascript:null" onClick="expandAllImageSizes()">Expand</a></li>
+                            <li><A HREF="javascript:null" onClick="shrinkAllImageSizes()">Shrink</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
