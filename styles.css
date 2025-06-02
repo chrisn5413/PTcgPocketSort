@@ -28,6 +28,14 @@ body {
     background-color: aliceblue;
 }
 
+/* styles the buttons for loading and reseting filters */
+.filter-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60px;
+}
+
 /* sets sorting, filter, and image size in the same line*/
 div.user-selection-area {
     display: flex;
