@@ -119,9 +119,55 @@ function changeImageSize(new_width) {
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
-let filters = [];
-function filterBy(option) {
-    
+const type_filter = new Set();
+const rarity_num_filter = new Set();
+const booster_filter = new Set();
+
+function loadFilterText() {
+    let types = Array.from(type_filter.keys());
+    let rarity = Array.from(rarity_num_filter.keys());
+    let booster = Array.from(booster_filter.keys());
+    document.getElementsByClassName('filter-selection')[0].innerHTML = types.concat(rarity, booster);
+}
+
+function updateFilters(category, value) {
+    if (category === "type") {
+        if (type_filter.has(value))
+            type_filter.delete(value);
+        else
+            type_filter.add(value)
+    } else if (category === "rarityNum") {
+        if (rarity_num_filter.has(value))
+            rarity_num_filter.delete(value);
+        else
+            rarity_num_filter.add(value)
+    } else if (category === "booster") {
+        if (booster_filter.has(value))
+            booster_filter.delete(value);
+        else
+            booster_filter.add(value)
+    } else {
+        return;
+    }
+
+    loadFilterText();    
+}
+
+function filterByOption(option) {
+    if (!(option in selected_filters)) {
+        selected_filters.append(option);
+        FILTERED_CURRENT_PAGE = FILTERED_CURRENT_PAGE.filter((card) => card[option] === option);
+    } else {
+
+    }
+}
+
+function resetFilter() {
+    type_filter.clear();
+    rarity_num_filter.clear();
+    booster_filter.clear();
+    CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 

@@ -10,6 +10,7 @@ div.header {
     display: flex;
     flex-direction: column;
     padding: 20px;
+    width: 1250px;
 }
 
 /* remove styling for all links */
@@ -27,6 +28,11 @@ ul {
 body {
     background-color: aliceblue;
 }
+
+.user-selection-area {
+    height: 265px;
+}
+
 
 /* styles the buttons for loading and reseting filters */
 .filter-buttons {
@@ -119,6 +125,7 @@ ul,
 .flex-space-between {
     display: flex;
     justify-content: space-between;
+    width: 700px;
 }
 
 /* have cards wrap around screen */

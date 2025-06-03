@@ -23,7 +23,7 @@
             </div>
             <div class="filter-options">
                 <div class="title body flex-space-between">
-                    <div>Filter By: <span class="filter-selection">insert-filter-selection</span></div>
+                    <div>Filter By: <span class="filter-selection"></span></div>
                     <div class="filter-buttons">
                         <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Load Filter</span></a>
                         <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Reset Filters</span></a>
@@ -34,49 +34,50 @@
                         <div class="type"><span class="center title">Pokemon Type</span>
                             <div class="body">
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="">Grass</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Water</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Psychic</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Darkness</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Dragon</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Grass')">Grass</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Water')">Water</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Psychic')">Psychic</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Darkness')">Darkness</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Dragon')">Dragon</a></li>
                                 </ul>
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="">Fire</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Lightning</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Fighting</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Metal</a></li>
-                                    <li><A HREF="javascript:null" onClick="">Colorless</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Fire')">Fire</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Lightning')">Lightning</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Fighting')">Fighting</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Metal')">Metal</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('type', 'Colorless')">Colorless</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="rarity"><span class="center title">Card rarity</span>
                             <div class="body">
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="">1 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="">2 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="">3 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="">4 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 0)"><span class="center">Promo</span></a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 1)">1 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 2)">2 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 3)">3 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 4)">4 Diamond</a></li>
                                 </ul>
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick=""><span class="center">1 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick=""><span class="center">2 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick=""><span class="center">3 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick="">Crown Rare</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 5)"><span class="center">1 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 6)"><span class="center">2 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 7)"><span class="center">3 Star</span></a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 8)">Crown Rare</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="booster"><span class="center title">Booster</span>
                             <div class="body">
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="">1) Genetic Apex</a></li>
-                                    <li><A HREF="javascript:null" onClick="">2) Mythical Island</a></li>
-                                    <li><A HREF="javascript:null" onClick="">3) Space-Time Smackdown</a></li>
-                                    <li><A HREF="javascript:null" onClick="">4) Triumphant Light</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Genetic Apex  (A1)')">1) Genetic Apex</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Mythical Island  (A1a)')">2) Mythical Island</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Space-Time Smackdown  (A2)')">3) Space-Time Smackdown</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Triumphant Light  (A2a)')">4) Triumphant Light</a></li>
                                 </ul>
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="">5) Shining Revelry</a></li>
-                                    <li><A HREF="javascript:null" onClick="">6) Celestial Guardians</a></li>
-                                    <li><A HREF="javascript:null" onClick="">7) Extradimensional Crisis</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Shining Revelry  (A2b)')">5) Shining Revelry</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('booster', 'Celestial Guardians  (A3)')">6) Celestial Guardians</a></li>
+                                    <li><A HREF="javascript:null" onClick="">7) Extradimensional Crisis (unavailable)</a></li>
                                 </ul>
                             </div>
                         </div>
