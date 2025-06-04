@@ -9,10 +9,11 @@
     <div class="header">
         <h1>Pokemon TCG Pocket Sorter</h1>
         <div class="user-selection-area">
-            <div class="sort-options"><div class="title">Sort By:</div>
+            <div class="sort-options">
+                <div class="title sort">Sort By: <span class="sort-selection-text">Card Id</span></div>
                 <div class="sorting">
                     <div class="sort-by">
-                        <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Reset Sorting</span></a>
+                        <A HREF= "javascript:null" onClick="resetPage()"><span class="center title reset">Reset Page</span></a>
                         <ul>
                             <li><A HREF= "javascript:null" onClick="sortByCardId()">Card Id</a></li>
                             <li><A HREF= "javascript:null" onClick="sortByCardType()">Card Type</a></li>
@@ -23,10 +24,10 @@
             </div>
             <div class="filter-options">
                 <div class="title body flex-space-between">
-                    <div>Filter By: <span class="filter-selection"></span></div>
+                    <div class="filter-selection">Filter By: <span class="filter-selection-text"></span></div>
                     <div class="filter-buttons">
-                        <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Load Filter</span></a>
-                        <A HREF= "javascript:null" onClick="resetSortOptions()"><span class="center title reset">Reset Filters</span></a>
+                        <A HREF= "javascript:null" onClick="loadFilter()"><span class="center title reset">Load Filter</span></a>
+                        <A HREF= "javascript:null" onClick="resetFilter()"><span class="center title reset">Reset Filters</span></a>
                     </div>
                 </div>
                 <div class="filters">
@@ -49,20 +50,20 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="rarity"><span class="center title">Card rarity</span>
+                        <div class="rarity"><span class="center title">Card rarity (0-8)</span>
                             <div class="body">
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 0)"><span class="center">Promo</span></a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 1)">1 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 2)">2 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 3)">3 Diamond</a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 4)">4 Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 0)">0)  Promo</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 1)">1)  1-Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 2)">2)  2-Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 3)">3)  3-Diamond</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 4)">4)  4-Diamond</a></li>
                                 </ul>
                                 <ul>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 5)"><span class="center">1 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 6)"><span class="center">2 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 7)"><span class="center">3 Star</span></a></li>
-                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 8)">Crown Rare</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 5)">5)  1-Star</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 6)">6)  2-Star</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 7)">7)  3-Star</a></li>
+                                    <li><A HREF="javascript:null" onClick="updateFilters('rarityNum', 8)">8)  Crown Rare</a></li>
                                 </ul>
                             </div>
                         </div>

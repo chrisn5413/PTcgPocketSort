@@ -119,53 +119,81 @@ function changeImageSize(new_width) {
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
-const type_filter = new Set();
-const rarity_num_filter = new Set();
-const booster_filter = new Set();
+const TYPE_FILTER = new Set();
+const RARITY_NUM_FILTER = new Set();
+const BOOSTER_FILTER = new Set();
 
-function loadFilterText() {
-    let types = Array.from(type_filter.keys());
-    let rarity = Array.from(rarity_num_filter.keys());
-    let booster = Array.from(booster_filter.keys());
-    document.getElementsByClassName('filter-selection')[0].innerHTML = types.concat(rarity, booster);
+function updateFilterText() {
+    let types = Array.from(TYPE_FILTER.keys());
+    let rarity = Array.from(RARITY_NUM_FILTER.keys());
+    let booster = Array.from(BOOSTER_FILTER.keys());
+    document.getElementsByClassName('filter-selection-text')[0].innerHTML = types.concat(rarity, booster).join(', ');
 }
 
 function updateFilters(category, value) {
     if (category === "type") {
-        if (type_filter.has(value))
-            type_filter.delete(value);
+        if (TYPE_FILTER.has(value))
+            TYPE_FILTER.delete(value);
         else
-            type_filter.add(value)
+            TYPE_FILTER.add(value)
     } else if (category === "rarityNum") {
-        if (rarity_num_filter.has(value))
-            rarity_num_filter.delete(value);
+        if (RARITY_NUM_FILTER.has(value))
+            RARITY_NUM_FILTER.delete(value);
         else
-            rarity_num_filter.add(value)
+            RARITY_NUM_FILTER.add(value)
     } else if (category === "booster") {
-        if (booster_filter.has(value))
-            booster_filter.delete(value);
+        if (BOOSTER_FILTER.has(value))
+            BOOSTER_FILTER.delete(value);
         else
-            booster_filter.add(value)
+            BOOSTER_FILTER.add(value)
     } else {
+        print('dont call this improperly');
         return;
     }
 
-    loadFilterText();    
+    updateFilterText();    
 }
 
-function filterByOption(option) {
-    if (!(option in selected_filters)) {
-        selected_filters.append(option);
-        FILTERED_CURRENT_PAGE = FILTERED_CURRENT_PAGE.filter((card) => card[option] === option);
-    } else {
-
+function loadFilter() {
+    CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
+    if (BOOSTER_FILTER.size > 0) {
+        CURRENT_PAGE_CARD_DATA = CURRENT_PAGE_CARD_DATA.filter(card => {
+            for (const boosterName of BOOSTER_FILTER)
+                if (boosterName === card.set_details)
+                    return true;
+            return false;
+        });
     }
+
+    if (RARITY_NUM_FILTER.size > 0) {
+        CURRENT_PAGE_CARD_DATA = CURRENT_PAGE_CARD_DATA.filter(card => {
+            for (const rarityNum of RARITY_NUM_FILTER) {
+                if (rarityNum === card.rarityNum) 
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    if (TYPE_FILTER.size > 0) {
+        CURRENT_PAGE_CARD_DATA = CURRENT_PAGE_CARD_DATA.filter(card => {
+            for (const type of TYPE_FILTER) {
+                if (type === card.type)
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
+
 
 function resetFilter() {
-    type_filter.clear();
-    rarity_num_filter.clear();
-    booster_filter.clear();
+    TYPE_FILTER.clear();
+    RARITY_NUM_FILTER.clear();
+    BOOSTER_FILTER.clear();
+    updateFilterText();
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
@@ -182,6 +210,7 @@ function sortByCardId() {
         ascending = 1;
     }
     sortByOption("chronologicalId", ascending);
+    document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Card Id';
 }
 
 function sortByCardType() {
@@ -192,6 +221,7 @@ function sortByCardType() {
         ascending = 1;
     }
     sortByOption("type", ascending);
+    document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Card Type';
 }
 
 function sortByCardRarity() {
@@ -202,6 +232,7 @@ function sortByCardRarity() {
         ascending = -1;
     }
     sortByOption("rarityNum", ascending);
+    document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Rarity';
 }
 
 function sortByOption(option, ascending){
@@ -209,7 +240,7 @@ function sortByOption(option, ascending){
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
-function resetSortOptions() {
+function resetPage() {
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
     reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
  }
