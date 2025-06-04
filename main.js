@@ -7,12 +7,15 @@ const url = 'https://raw.githubusercontent.com/chrisn5413/CARDS-PokemonPocket-sc
 // let CONTAINER;
 let ALL_CARD_DATA;
 let CURRENT_PAGE_CARD_DATA;
+const CONTAINER = document.getElementById('card-container');
+
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
     updatePokemonData();
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 })();
 
 const rarity = {
@@ -29,12 +32,15 @@ const rarity = {
 
 const default_image_width = 367;
 let current_image_width = default_image_width;
+
+// updates each card with new data to make finding/sorting/filtering easier
 function updatePokemonData() {
     let chronologicalId = 0;
     for (let card of ALL_CARD_DATA) {
         chronologicalId++;
         card.chronologicalId = chronologicalId;
         card.rarityNum = rarity[card.rarity]
+        card.json = JSON.stringify(card);
 
         let cardImg = document.createElement('img');
         cardImg.id = card.chronologicalId;
@@ -46,22 +52,25 @@ function updatePokemonData() {
     }
 }
 
-function createNewCardContainer() {
-    let container = document.getElementById('card-container');
-    if (container !== null)
-        container.remove();
+// Called to create a new card container every time cards are loaded
+// function createNewCardContainer() {
+//     let container = document.getElementById('card-container');
+//     if (container !== null)
+//         container.remove();
 
-    container = document.createElement('div');
-    container.id = 'card-container';
-    document.getElementsByTagName('body')[0].append(container);
+//     container = document.createElement('div');
+//     container.id = 'card-container';
+//     document.getElementsByTagName('body')[0].append(container);
 
-    return container;
-}
+//     return container;
+// }
 
 // loads cards onto page given pokemon objects in a collection
 function reloadCardContainer(container, newData) {
     if(typeof newData !== 'object')
         return;
+
+    container.replaceChildren();
 
     for (let card of newData) {
         container.append(card.cardImg);
@@ -115,8 +124,8 @@ function changeImageSize(new_width) {
         card.cardImg.setAttribute('width', current_image_width);
     }
 
-    // reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 const TYPE_FILTER = new Set();
@@ -185,7 +194,8 @@ function loadFilter() {
         });
     }
 
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 
@@ -195,7 +205,8 @@ function resetFilter() {
     BOOSTER_FILTER.clear();
     updateFilterText();
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 
@@ -237,12 +248,14 @@ function sortByCardRarity() {
 
 function sortByOption(option, ascending){
     CURRENT_PAGE_CARD_DATA = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
 function resetPage() {
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
-    reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
+    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
  }
 
 // stolen from google
