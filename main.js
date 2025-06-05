@@ -1,21 +1,24 @@
-﻿
+﻿// A Pokemon Pocket TCG sorting page
+
+// Created by Christopher Nguyen
+// Credits:
+// - images & card data: limitless tcg
+// - scraper that grabbed their images: LucachuTW and collaborators on github
 
 // load pokemon from json url into a POKEMON_DATA, updating data and reloading page
-// const url = 'https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/v4.json';
 const url = 'https://raw.githubusercontent.com/chrisn5413/CARDS-PokemonPocket-scrapper/refs/heads/main/pokemon_cards.json'
 
-// let CONTAINER;
 let ALL_CARD_DATA;
 let CURRENT_PAGE_CARD_DATA;
 const CONTAINER = document.getElementById('card-container');
 
+// loads initial page
 (async () => {
     let promiseResult = await fetch(url);
     ALL_CARD_DATA = await promiseResult.json();
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
     updatePokemonData();
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CURRENT_PAGE_CARD_DATA);
 })();
 
 const rarity = {
@@ -40,7 +43,7 @@ function updatePokemonData() {
         chronologicalId++;
         card.chronologicalId = chronologicalId;
         card.rarityNum = rarity[card.rarity]
-        card.json = JSON.stringify(card);
+        card.json = JSON.stringify(Object.values(card)).toLowerCase();
 
         let cardImg = document.createElement('img');
         cardImg.id = card.chronologicalId;
@@ -52,53 +55,16 @@ function updatePokemonData() {
     }
 }
 
-// Called to create a new card container every time cards are loaded
-// function createNewCardContainer() {
-//     let container = document.getElementById('card-container');
-//     if (container !== null)
-//         container.remove();
-
-//     container = document.createElement('div');
-//     container.id = 'card-container';
-//     document.getElementsByTagName('body')[0].append(container);
-
-//     return container;
-// }
-
 // loads cards onto page given pokemon objects in a collection
-function reloadCardContainer(container, newData) {
+function reloadCardContainer(newData) {
     if(typeof newData !== 'object')
         return;
 
-    container.replaceChildren();
+    CONTAINER.replaceChildren();
 
     for (let card of newData) {
-        container.append(card.cardImg);
+        CONTAINER.append(card.cardImg);
     }
-    
-    // keeping this in, in memory of my waste of time lmao, turns out browsers and phones are smart
-    // and I don't need to baby them with delayed loading
-    
-    // // 30ms between every card loading
-    // let secondsBetweenLoading = 0.03;
-    // let currentSeconds = 0;
-    // let counter = 0;
-    //
-    // for (let card of newData) {
-    //     // controls loading between sequential cards
-    //     currentSeconds += secondsBetweenLoading;
-    //    
-    //     // every 30 pokemon, reduce speed between loading by 5ms
-    //     counter++;
-    //     if(counter > 30 && secondsBetweenLoading > 0) {
-    //         counter = 0;
-    //         secondsBetweenLoading -= 0.005;
-    //     }
-    //    
-    //     setTimeout(() => {
-    //         container.append(card.cardImg)
-    //     }, currentSeconds * 1000);
-    // }
 }
 
 const image_resize_amount = 50;
@@ -118,20 +84,20 @@ function changeImageSize(new_width) {
         return;
 
     current_image_width = new_width;
-    // CONTAINER = createNewCardContainer();
     
     for (let card of ALL_CARD_DATA) {
         card.cardImg.setAttribute('width', current_image_width);
     }
 
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CURRENT_PAGE_CARD_DATA);
 }
 
 const TYPE_FILTER = new Set();
 const RARITY_NUM_FILTER = new Set();
 const BOOSTER_FILTER = new Set();
+const USER_SEARCH_FIELD = document.getElementById('user-search');
 
+// this is the visual indicator for selected filters
 function updateFilterText() {
     let types = Array.from(TYPE_FILTER.keys());
     let rarity = Array.from(RARITY_NUM_FILTER.keys());
@@ -139,6 +105,7 @@ function updateFilterText() {
     document.getElementsByClassName('filter-selection-text')[0].innerHTML = types.concat(rarity, booster).join(', ');
 }
 
+// this adds and removes filters every time one is selected
 function updateFilters(category, value) {
     if (category === "type") {
         if (TYPE_FILTER.has(value))
@@ -163,7 +130,8 @@ function updateFilters(category, value) {
     updateFilterText();    
 }
 
-function loadFilter() {
+// reloads page based on selected types, rarity, booster, and user input
+function loadPage() {
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
     if (BOOSTER_FILTER.size > 0) {
         CURRENT_PAGE_CARD_DATA = CURRENT_PAGE_CARD_DATA.filter(card => {
@@ -194,25 +162,37 @@ function loadFilter() {
         });
     }
 
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    if (USER_SEARCH_FIELD.value) {
+        CURRENT_PAGE_CARD_DATA = CURRENT_PAGE_CARD_DATA.filter(card => {
+            let search = USER_SEARCH_FIELD.value.toLowerCase().split(' ');
+            
+            for (let word of search) {
+                if (word.includes('_'))
+                    word = word.replace('_',' ');
+                
+                if (card.json.includes(word))
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    reloadCardContainer(CURRENT_PAGE_CARD_DATA);
 }
 
-
-function resetFilter() {
+// clears all selected filters and resets page
+function clearFilter() {
     TYPE_FILTER.clear();
     RARITY_NUM_FILTER.clear();
     BOOSTER_FILTER.clear();
     updateFilterText();
-    CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
 }
 
-
+// default sort on fresh page
 let sortOption = "chronologicalId";
 let ascending = 1;
 
+// sorts by id, reverses the sort if previous sort was the same
 function sortByCardId() {
     if (sortOption === "chronologicalId"){
         ascending *= -1;
@@ -224,6 +204,7 @@ function sortByCardId() {
     document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Card Id';
 }
 
+// sorts by type, reverses the sort if previous sort was the same
 function sortByCardType() {
     if (sortOption === "type"){
         ascending *= -1;
@@ -235,6 +216,7 @@ function sortByCardType() {
     document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Card Type';
 }
 
+// sorts by rarity, reverses the sort if previous sort was the same
 function sortByCardRarity() {
     if (sortOption === "rarityNum"){
         ascending *= -1;
@@ -246,17 +228,25 @@ function sortByCardRarity() {
     document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Rarity';
 }
 
+// called by specific sorts and loads page accordingly
 function sortByOption(option, ascending){
     CURRENT_PAGE_CARD_DATA = sortArrayByProperty(ascending, CURRENT_PAGE_CARD_DATA, option);
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
+    reloadCardContainer(CURRENT_PAGE_CARD_DATA);
 }
 
+// restarts page to original sort order and no filter
 function resetPage() {
+    document.getElementsByClassName('sort-selection-text')[0].innerHTML = 'Card Id';
+    sortOption = "chronologicalId";
+    ascending = 1;
+
+    clearFilter();
+
+    document.getElementById('user-search').value = ""
+    
     CURRENT_PAGE_CARD_DATA = ALL_CARD_DATA;
-    reloadCardContainer(CONTAINER, CURRENT_PAGE_CARD_DATA);
-    // reloadCardContainer(createNewCardContainer(), CURRENT_PAGE_CARD_DATA);
- }
+    reloadCardContainer(CURRENT_PAGE_CARD_DATA);
+}
 
 // stolen from google
 function sortArrayByProperty(ascending, arr, property) {
@@ -270,4 +260,3 @@ function sortArrayByProperty(ascending, arr, property) {
         return 0;
     });
 }
-

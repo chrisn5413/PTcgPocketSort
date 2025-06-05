@@ -8,6 +8,18 @@
 <body>
     <div class="header">
         <h1>Pokemon TCG Pocket Sorter</h1>
+        <div class="custom-search-area">
+            <div class="search">
+                <label for="user-search">Search: </label>
+                <input 
+                    type="text"
+                    id="user-search"
+                    search="search"
+                    placeholder="Power Draw Stage_2"> 
+                <button onclick="loadPage()">OK</button>
+            </div>
+            
+        </div>
         <div class="user-selection-area">
             <div class="sort-options">
                 <div class="title sort">Sort By: <span class="sort-selection-text">Card Id</span></div>
@@ -26,8 +38,8 @@
                 <div class="title body flex-space-between">
                     <div class="filter-selection">Filter By: <span class="filter-selection-text"></span></div>
                     <div class="filter-buttons">
-                        <A HREF= "javascript:null" onClick="loadFilter()"><span class="center title reset">Load Filter</span></a>
-                        <A HREF= "javascript:null" onClick="resetFilter()"><span class="center title reset">Reset Filters</span></a>
+                        <A HREF= "javascript:null" onClick="loadPage()"><span class="center title reset">Load Filter</span></a>
+                        <A HREF= "javascript:null" onClick="clearFilter()"><span class="center title reset">Clear Filters</span></a>
                     </div>
                 </div>
                 <div class="filters">

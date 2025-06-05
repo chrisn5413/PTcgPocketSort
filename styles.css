@@ -30,7 +30,7 @@ body {
 }
 
 .user-selection-area {
-    height: 265px;
+    height: 350px;
 }
 
 
@@ -96,6 +96,11 @@ div.user-selection-area {
 .booster,
 .img-sizes-container {
     background-color: #dbddd7;
+}
+
+li {
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 ul,
